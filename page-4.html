@@ -2,13 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>E-rate </title>
+    <title>E-rate</title>
+    <style>
+        .game-meta {
+            font-size: 22px;
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 10px 20px;
+            align-items: start;
+        }
+        .game-meta dt {
+            font-weight: bold;
+        }
+        .game-meta dd {
+            margin: 0;
+        }
+        .game-meta a {
+            color: inherit;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body bgcolor="#111827" text="white" style="font-family: sans-serif; margin: 0; padding: 20px;">
 
     <table width="100%" border="0" cellspacing="0" cellpadding="10">
         <tr>
-            <td width="20%"><h1>E-rate</h1></td>
+            <td width="20%"><h1 style="font-size: 50px; margin-bottom: 10px;">E-rate</h1></td>
             <td align="center">
                 <input type="text" placeholder="Search" style="width: 80%; padding: 10px; border-radius: 20px; border: none; background-color: #4b5563; color: white;">
             </td>
@@ -18,12 +37,12 @@
         </tr>
     </table>
 
-    <h2>Marvel's Spider-Man Remastered</h2>
+    <h2 style="font-size: 40px; margin-bottom: 10px;">Marvel's Spider-Man Remastered</h2>
 
     <table width="100%" border="0" cellspacing="20" cellpadding="0">
         <tr valign="top">
             <td width="40%">
-                <img src="spiderman_header.jpg" alt="Spider-Man Remastered" width="100%" style="border: 1px solid #374151;">
+                <img src="Spider-Header.jpg" alt="Spider-Man Remastered" width="100%" style="border: 1px solid #374151;">
                 
                 <p style="color: #fbbf24; font-size: 20px;">★★★★★★★★★★ <span style="color: white; font-size: 16px;">10/10</span></p>
                 
@@ -34,31 +53,127 @@
                     <button style="border-radius: 10px; border: none; font-size: 10px; padding: 2px 8px;">Newest</button>
                     <button style="border-radius: 10px; border: none; font-size: 10px; padding: 2px 8px;">Oldest</button>
                 </small>
+                
+                <div style="margin-top: 15px;">
+                    <input id="username" type="text" placeholder="Your name"
+                        style="padding: 5px; border-radius: 5px; border: none; margin-bottom: 5px; width: 150px;">
 
-                <div style="background-color: #d1d5db; color: black; padding: 15px; border-radius: 15px; margin-top: 10px; font-size: 12px;">
-                    <b>UserA - 9/10:</b> Gameplay is smooth, graphics are beautiful...<br><br>
-                    <b>UserB - 10/10:</b> Give me pictures of Spida Man!!! - Perfect Game<br><br>
-                    <b>UserC - 8/10:</b> The combat, while good, is nowhere near the levels of Arkham...
+                    <select id="rating" style="padding: 5px; border-radius: 5px;">
+                        <option value="10">10/10</option>
+                        <option value="9">9/10</option>
+                        <option value="8">8/10</option>
+                        <option value="7">7/10</option>
+                    </select>
+
+                    <br>
+
+                    <textarea id="reviewText" placeholder="Write your review..."
+                        style="width: 100%; margin-top: 5px; border-radius: 5px; padding: 5px;"></textarea>
+
+                    <br>
+
+                    <button onclick="addReview()" style="margin-top: 5px; border-radius: 10px; border: none; padding: 5px 10px;">
+                        Submit Review
+                    </button>
+                </div>
+
+                <div id="review-list" style="background-color: #d1d5db; color: black; padding: 15px; border-radius: 15px; margin-top: 10px; font-size: 12px;">
                 </div>
             </td>
 
             <td width="60%">
                 <div style="background-color: #1f2937; padding: 40px; border-radius: 50px; min-height: 400px;">
-                    <table border="0" cellspacing="10" cellpadding="5" style="font-size: 18px;">
-                        <tr><td><b>Content:</b></td><td><u>read more</u></td></tr>
-                        <tr><td><b>Publisher:</b></td><td>PlayStation Publishing LLC</td></tr>
-                        <tr><td><b>Date:</b></td><td>September 7, 2018</td></tr>
-                        <tr><td><b>Latest Ver.:</b></td><td>14752622</td></tr>
-                        <tr><td colspan="2"><br></td></tr>
-                        <tr><td><b>Steam:</b></td><td><u>$23.99 - 60%</u></td></tr>
-                        <tr><td><b>Epic Games:</b></td><td><u>$59.99</u></td></tr>
-                        <tr><td><b>Playstation:</b></td><td><u>$49.99</u></td></tr>
-                        <tr><td colspan="2"><br></td></tr>
-                        <tr><td><b>Platform:</b></td><td>Playstation, Windows</td></tr>
-                    </table>
+                    <dl class="game-meta">
+                        <dt>Content:</dt>
+                        <dd>
+                            <details>
+                                <summary style="cursor: pointer; text-decoration: underline;">
+                                    read more
+                                </summary>
+                                <p style="margin-top: 10px;">
+                                    In Marvel’s Spider-Man Remastered, the worlds of Peter Parker and Spider-Man collide in an original action-packed story. Play as an experienced Peter Parker, fighting big crime and iconic villains in Marvel’s New York. Web-swing through vibrant neighborhoods and defeat villains with epic takedowns.
+                                </p>
+                            </details>
+                        </dd>
+                        <dt>Publisher:</dt>
+                        <dd>PlayStation Publishing LLC</dd>
+                        <dt>Date:</dt>
+                        <dd>September 7, 2018</dd>
+                        <dt>Latest Ver.:</dt>
+                        <dd>14752622</dd>
+                        <dt>Steam:</dt>
+                        <dd><a href="https://store.steampowered.com/app/1817070/Marvels_SpiderMan_Remastered/" target="_blank">$59.99</a></dd>
+                        <dt>Epic Games:</dt>
+                        <dd><a href="https://store.epicgames.com/en-US/p/marvels-spider-man-remastered" target="_blank">$59.99</a></dd>
+                        <dt>Playstation:</dt>
+                        <dd><a href="https://store.playstation.com/en-us/product/UP9000-PPSA01467_00-MARVELSSPIDERMAN" target="_blank">$49.99</a></dd>
+                        <dt>Platform:</dt>
+                        <dd>Playstation, Windows</dd>
+                    </dl>
                 </div>
             </td>
         </tr>
     </table>
 
+    <h1>System requirement:</h1>
+
+    <div style="background-color: #1f2937; padding: 15px; border-radius: 20px; max-width: 800px; font-size: 22px;">
+
+    <h3>Minimum</h3>
+    <ul>
+        <li><b>OS:</b> Windows 10 64-bit</li>
+        <li><b>Processor:</b> Intel Core i3-4160 / AMD equivalent</li>
+        <li><b>Memory:</b> 8 GB RAM</li>
+        <li><b>Graphics:</b> NVIDIA GTX 950 / AMD Radeon RX 470</li>
+        <li><b>Storage:</b> 75 GB available space</li>
+    </ul>
+
+    <h3>Recommended</h3>
+    <ul>
+        <li><b>OS:</b> Windows 10 64-bit</li>
+        <li><b>Processor:</b> Intel Core i5-4670 / AMD Ryzen 5 1600</li>
+        <li><b>Memory:</b> 16 GB RAM</li>
+        <li><b>Graphics:</b> NVIDIA GTX 1060 / AMD Radeon RX 580</li>
+        <li><b>Storage:</b> 75 GB SSD</li>
+    </ul>
+
+</div>
+
+</body>
+
+<script>
+function addReview() {
+    const name = document.getElementById("username").value || "Anonymous";
+    const rating = document.getElementById("rating").value;
+    const text = document.getElementById("reviewText").value;
+
+    if (text.trim() === "") return;
+
+    const review = { name, rating, text };
+
+    let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+    reviews.push(review);
+
+    localStorage.setItem("reviews", JSON.stringify(reviews));
+
+    displayReviews();
+
+    document.getElementById("reviewText").value = "";
+}
+
+function displayReviews() {
+    const container = document.getElementById("review-list");
+    const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+
+    container.innerHTML = "";
+
+    reviews.forEach(r => {
+        container.innerHTML += `
+            <b>${r.name} - ${r.rating}/10:</b> ${r.text}<br><br>
+        `;
+    });
+}
+
+displayReviews();
+</script>
     <h1>System requirement:</h1>
