@@ -1,193 +1,46 @@
 
-    {
-        id: 1,
-        title: "Marvel Spider Man",
-        subtitle: "Marvel Spider Man",
-        rating: "5.0",
-        favorite: true,
-        image: "game/Spiderman.jpg"
-    },
-    {
-        id: 2,
-        title: "Marvel Spider Man: Mile Morales",
-        subtitle: "Marvel Spider Man: Mile Morales",
-        rating: "5.0",
-        favorite: true,
-        image: "game/Mile morales.jpg"
-    },
-    {
-        id: 3,
-        title: "Marvel Spider Man 2",
-        subtitle: "Marvel Spider Man 2",
-        rating: "5.0",
-        favorite: true,
-        image: "game/Spiderman2.png"
-    },
-    {
-        id: 4,
-        title: "Marvel Rivals",
-        subtitle: "Marvel Rivals",
-        rating: "5.0",
-        favorite: false,
-        image: "game/marvel-rivals.png"
-    },
-    {
-        id: 5,
-        title: "Green Hell",
-        subtitle: "Green Hell",
-        rating: "5.0",
-        favorite: false,
-        image: "images/green-hell.svg"
-    },
-    {
-        id: 6,
-        title: "League of Legends",
-        subtitle: "League of Legend",
-        rating: "5.0",
-        favorite: true,
-        image: "images/lol.svg"
-    },
-    {
-        id: 7,
-        title: "Valorant",
-        subtitle: "Valorant",
-        rating: "5.0",
-        favorite: false,
-        image: "images/valorant.svg"
-    },
-    {
-        id: 8,
-        title: "Player Unknown Battle Ground (PUBG)",
-        subtitle: "PUBG",
-        rating: "5.0",
-        favorite: false,
-        image: "images/pubg.svg"
-    },
-    {
-        id: 9,
-        title: "Fortnite",
-        subtitle: "Fortnite",
-        rating: "5.0",
-        favorite: true,
-        image: "images/fortnite.svg"
-    },
-    {
-        id: 10,
-        title: "Counter Strike 2 (CS2)",
-        subtitle: "Counter Strike 2",
-        rating: "5.0",
-        favorite: false,
-        image: "images/cs2.svg"
-    }
-];
-
-const contentArea = document.getElementById("content-area");
-const searchInput = document.getElementById("search");
-const tabs = Array.from(document.querySelectorAll(".tab"));
-const resultCount = document.getElementById("result-count");
-let activeTab = "Browse";
-let activeGameId = games[0].id;
-
-function createCard(game) {
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "card";
-    card.dataset.id = game.id;
-    card.innerHTML = `
-        <div class="card-cover">
-            <img src="${game.image}" alt="${game.title} cover" loading="lazy">
-        </div>
-        <div class="card-body">
-            <p class="card-title">${game.title}</p>
-            <p class="card-subtitle">${game.subtitle}</p>
-            <div class="card-rating">
-                <span class="stars">★ ★ ★ ★ ★</span>
-                <span>${game.rating}</span>
-            </div>
-        </div>
-    `;
-
-    card.addEventListener("click", () => {
-        activeGameId = game.id;
-        highlightSelectedCard();
-    });
-
-    return card;
+/* Game Card Styling */
+table {
+    border-collapse: collapse;
 }
 
-function highlightSelectedCard() {
-    const cards = contentArea.querySelectorAll(".card");
-    cards.forEach(card => {
-        const id = Number(card.dataset.id);
-        card.classList.toggle("active", id === activeGameId);
-    });
+img {
+    border: 2px solid #00bfff;
+    padding: 4px;
+    background-color: #2a3a4d;
+    transition: all 0.3s ease;
 }
 
-function renderGames(list) {
-    contentArea.innerHTML = "";
-    if (list.length === 0) {
-        const empty = document.createElement("div");
-        empty.className = "empty-state";
-        empty.textContent = "No games match your search. Try another keyword.";
-        contentArea.appendChild(empty);
-        resultCount.textContent = "0";
-        return;
-    }
-
-    list.forEach(game => contentArea.appendChild(createCard(game)));
-    resultCount.textContent = String(list.length);
-    highlightSelectedCard();
+img:hover {
+    border-color: #00ffff;
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.7);
+    transform: scale(1.05);
 }
 
-function renderProfile() {
-    contentArea.innerHTML = `
-        <div class="profile-panel">
-            <div class="profile-avatar">ER</div>
-            <div class="profile-info">
-                <h3>Gamer Profile</h3>
-                <p>Welcome back! Here is your current activity summary for E-rate.</p>
-                <p><strong>Favorites:</strong> ${games.filter(game => game.favorite).length}</p>
-                <p><strong>Recent views:</strong> ${games.length}</p>
-            </div>
-        </div>
-    `;
-    resultCount.textContent = String(games.length);
+/* Table Cell Styling for Game Cards */
+td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #333;
+    background-color: #243347;
+    transition: all 0.3s ease;
 }
 
-function getFilteredGames() {
-    const query = searchInput.value.trim().toLowerCase();
-    let filtered = games.filter(game => {
-        return game.title.toLowerCase().includes(query) || game.subtitle.toLowerCase().includes(query);
-    });
-
-    if (activeTab === "Favorite") {
-        filtered = filtered.filter(game => game.favorite);
-    }
-
-    return filtered;
+td:hover {
+    background-color: #2a4060;
+    border-color: #00bfff;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+    z-index: 1;
 }
 
-function updateTabState(tabName) {
-    activeTab = tabName;
-    tabs.forEach(tab => {
-        tab.classList.toggle("active", tab.dataset.tab === tabName);
-    });
-
-    if (tabName === "Profile") {
-        renderProfile();
-    } else {
-        renderGames(getFilteredGames());
-    }
+small {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #aaa;
 }
 
-searchInput.addEventListener("input", () => {
-    if (activeTab !== "Profile") {
-        renderGames(getFilteredGames());
-    }
-});
-
-tabs.forEach(tab => {
-    tab.addEventListener("click", () => updateTabState(tab.dataset.tab));
-});
-
-updateTabState("Browse");
+h3 {
+    color: #00bfff;
+    text-shadow: 0 0 5px rgba(0, 191, 255, 0.3);
+}
