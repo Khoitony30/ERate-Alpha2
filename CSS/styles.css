@@ -13,7 +13,7 @@
         subtitle: "Marvel Spider Man: Mile Morales",
         rating: "5.0",
         favorite: true,
-        image: "images/spiderman-miles.svg"
+        image: "game/Mile morales.jpg"
     },
     {
         id: 3,
@@ -21,7 +21,7 @@
         subtitle: "Marvel Spider Man 2",
         rating: "5.0",
         favorite: true,
-        image: "images/spiderman2.svg"
+        image: "game/Spiderman2.png"
     },
     {
         id: 4,
@@ -29,7 +29,7 @@
         subtitle: "Marvel Rivals",
         rating: "5.0",
         favorite: false,
-        image: "images/marvel-rivals.svg"
+        image: "game/marvel-rivals.png"
     },
     {
         id: 5,
