@@ -1,84 +1,39 @@
-<!-- Khoi Nguyen -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-rate</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="app-shell">
+        <header class="topbar">
+            <div class="brand-line">
+                <div class="brand-title">E-rate</div>
+                <div class="search-box">
+                    <input id="search" type="search" placeholder="Search" aria-label="Search">
+                </div>
+            </div>
+            <button class="icon-action" aria-label="Profile circle"></button>
+        </header>
 
-    <header>
-        <h1>E-rate</h1>
-        
-        <form>
-            <input type="text" placeholder="Search">
-            <button type="submit">Search</button>
-        </form>
-
-        <nav>
-            <ul>
-                <li><a href="#">Browse</a></li>
-                <li><a href="#">Favorite</a></li>
-                <li><a href="#">Profile</a></li>
-            </ul>
+        <nav class="nav-tabs" role="tablist" aria-label="Main navigation">
+            <button class="tab active" type="button" data-tab="Browse">Browse</button>
+            <button class="tab" type="button" data-tab="Favorite">Favorite</button>
+            <button class="tab" type="button" data-tab="Profile">Profile</button>
         </nav>
-    </header>
 
-    <hr>
+        <div class="divider"></div>
 
-    <main>
-        <h2>Recently</h2>
+        <section class="section-head">
+            <h2>Recently</h2>
+            <span id="result-count" class="result-count">10</span>
+        </section>
 
-        <table border="0" cellpadding="10">
-            <tr>
-                <td>
-                    <img src="spider-man.jpg" alt="Marvel Spider-Man" width="150">
-                    <p>Marvel Spider-Man<br>★★★★★ 5.0</p>
-                </td>
-                <td>
-                    <img src="miles-morales.jpg" alt="Spider-Man Miles Morales" width="150">
-                    <p>Marvel Spider-Man: Miles Morales<br>★★★★★ 5.0</p>
-                </td>
-                <td>
-                    <img src="spider-man-2.jpg" alt="Marvel Spider-Man 2" width="150">
-                    <p>Marvel Spider-Man 2<br>★★★★★ 5.0</p>
-                </td>
-                <td>
-                    <img src="marvel-rivals.jpg" alt="Marvel Rivals" width="150">
-                    <p>Marvel Rivals<br>★★★★★ 5.0</p>
-                </td>
-                <td>
-                    <img src="green-hell.jpg" alt="Green Hell" width="150">
-                    <p>Green Hell<br>★★★★★ 5.0</p>
-                </td>
-            </tr>
-            
-            <tr>
-                <td>
-                    <img src="league-of-legends.jpg" alt="League of Legends" width="150">
-                    <p>League of Legends<br>★★★★★ 5.0</p>
-                </td>
-                <td>
-                    <img src="valorant.jpg" alt="Valorant" width="150">
-                    <p>Valorant<br>★★★★★ 5.0</p>
-                </td>
-                <td>
-                    <img src="pubg.jpg" alt="PUBG" width="150">
-                    <p>Player Unknown Battle Ground (PUBG)<br>★★★★★ 5.0</p>
-                </td>
-                <td>
-                    <img src="fortnite.jpg" alt="Fortnite" width="150">
-                    <p>Fortnite<br>★★★★★ 5.0</p>
-                </td>
-                <td>
-                    <img src="cs2.jpg" alt="Counter Strike 2" width="150">
-                    <p>Counter Strike 2 (CS2)<br>★★★★★ 5.0</p>
-                </td>
-            </tr>
-        </table>
-    </main>
+        <main id="content-area" class="content-area"></main>
+    </div>
 
-    <hr>
-
+    <script src="script.js"></script>
 </body>
 </html>
