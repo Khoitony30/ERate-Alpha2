@@ -8,9 +8,11 @@
 </head>
 <body>
     <div class="app-shell">
+
+        <!-- HEADER: Logo + Search bar + Profile button -->
         <header class="topbar">
             <div class="brand-line">
-                <div class="brand-title">E-rate</div>
+                <a href="index.html" style="text-decoration: none; color: inherit;"><div class="brand-title">E-rate</div></a>
                 <div class="search-box">
                     <input id="search" type="search" placeholder="Search" aria-label="Search">
                 </div>
@@ -18,20 +20,35 @@
             <button class="icon-action" aria-label="Profile circle"></button>
         </header>
 
+        <!-- NAV TABS: Browse / Favorite / Profile -->
         <nav class="nav-tabs" role="tablist" aria-label="Main navigation">
             <button class="tab active" type="button" data-tab="Browse">Browse</button>
             <button class="tab" type="button" data-tab="Favorite">Favorite</button>
             <button class="tab" type="button" data-tab="Profile">Profile</button>
         </nav>
 
+        <!-- DIVIDER LINE -->
         <div class="divider"></div>
 
-        <section class="section-head">
+        <!-- HERO SECTION: Banner image + title + Start browsing button -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">E-Rate</h1>
+                <p class="hero-description">Platform to review and recommend your game with your friend</p>
+                <a href="page-2.html"><button class="hero-button">Start browsing</button></a>
+            </div>
+            <div class="hero-background" style="background-image: url('game/play.jpg')"></div>
+        </section>
+
+        <!-- RECENTLY SECTION HEADER: shown when search/tab is active -->
+        <section class="section-head" id="recently-section" style="display: none;">
             <h2>Recently</h2>
             <span id="result-count" class="result-count">10</span>
         </section>
 
-        <main id="content-area" class="content-area"></main>
+        <!-- CONTENT AREA: Game cards rendered by script.js -->
+        <main id="content-area" class="content-area" style="display: none;"></main>
+
     </div>
 
     <script src="script.js"></script>
