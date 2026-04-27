@@ -137,6 +137,78 @@ button {
     margin-bottom: 22px;
 }
 
+.hero-section {
+    position: relative;
+    height: 500px;
+    border-radius: 28px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+
+.hero-background::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(18, 24, 50, 0.45);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 60px 80px;
+    max-width: 600px;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+}
+
+.hero-description {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 0 40px 0;
+    line-height: 1.5;
+}
+
+.hero-button {
+    background: rgba(255, 255, 255, 0.95);
+    color: #121832;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 999px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hero-button:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+}
+
 .section-head {
     display: flex;
     justify-content: space-between;
