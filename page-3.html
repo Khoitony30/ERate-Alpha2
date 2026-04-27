@@ -1,67 +1,407 @@
-<--Khoi Nguyen-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-rate</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: #f8fafc;
+            background: #121832;
+            --surface: rgba(26, 36, 61, 0.95);
+            --surface-strong: rgba(18, 24, 50, 0.96);
+            --border: rgba(255, 255, 255, 0.08);
+            --accent: #7691ff;
+            --muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at top left, rgba(118, 145, 255, 0.14), transparent 28%),
+                        radial-gradient(circle at bottom right, rgba(93, 117, 255, 0.10), transparent 22%),
+                        #121832;
+            color: #f8fafc;
+        }
+
+        .app-shell {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 18px 22px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            backdrop-filter: blur(12px);
+        }
+
+        .brand-title {
+            font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 540px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.06);
+            color: #f8fafc;
+            outline: none;
+            font-size: 1rem;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(248, 250, 252, 0.55);
+        }
+
+        .search-box input:focus {
+            border-color: rgba(118, 145, 255, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .icon-action {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 26px 0 18px;
+        }
+
+        .tab {
+            appearance: none;
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: 1rem;
+            padding: 12px 0;
+            cursor: pointer;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .tab.active {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .tab.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -4px;
+            height: 4px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #8da2ff, #4e7cff);
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin: 30px 0 18px;
+        }
+
+        .section-head h2 {
+            margin: 0;
+            font-size: 1.35rem;
+            font-weight: 700;
+        }
+
+        .section-description {
+            color: var(--muted);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .content-area {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 18px;
+            grid-auto-rows: 1fr;
+        }
+
+        .content-area > a {
+            display: block;
+            height: 100%;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(118, 145, 255, 0.35);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .card-cover {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            position: absolute;
+            inset: 0;
+        }
+
+        .card-body {
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 9px;
+            flex: 1;
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .card-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .stars {
+            color: #facc15;
+            letter-spacing: 0.02em;
+            font-size: 0.9rem;
+        }
+
+        .section-block {
+            margin-bottom: 32px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 1200px) {
+            .content-area {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 980px) {
+            .content-area {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            .topbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-tabs {
+                gap: 18px;
+                flex-wrap: wrap;
+            }
+
+            .content-area {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 500px) {
+            .content-area {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-<body bgcolor="#1a243d" text="white" link="white" vlink="white">
+<body>
+    <div class="app-shell">
 
-    <table width="100%" cellpadding="15" border="0">
-        <tr>
-            <td width="20%"><h1>E-rate</h1></td>
-            <td align="center">
-                <input type="text" placeholder="Search" style="width: 80%; padding: 8px; border-radius: 20px; border: none;">
-            </td>
-            <td width="20%" align="right">
-                <div style="width: 35px; height: 35px; background-color: #ccc; border-radius: 50%;"></div>
-            </td>
-        </tr>
-    </table>
+        <!-- HEADER: Logo + Search bar + Profile button -->
+        <header class="topbar">
+            <a href="index.html" style="text-decoration: none; color: inherit;"><div class="brand-title">E-rate</div></a>
+            <div class="search-box">
+                <input id="search" type="search" placeholder="Search" aria-label="Search games">
+            </div>
+            <button class="icon-action" aria-label="Profile"></button>
+        </header>
 
-    <table width="100%" border="0" style="border-bottom: 1px solid #444;">
-        <tr align="center">
-            <td width="33%"><h3>Browse</h3></td>
-            <td width="33%"><h3>Favorite</h3></td>
-            <td width="33%"><h3>Profile</h3></td>
-        </tr>
-    </table>
+        <!-- NAV TABS: Browse / Favorite / Profile -->
+        <nav class="nav-tabs" role="tablist" aria-label="Main navigation">
+            <button class="tab" type="button" data-tab="Browse">Browse</button>
+            <button class="tab active" type="button" data-tab="Favorite">Favorite</button>
+            <button class="tab" type="button" data-tab="Profile">Profile</button>
+        </nav>
 
-    <br>
+        <!-- BROWSE SECTION: hidden on this page (redirects to page-2) -->
+        <div id="browse-section" class="hidden">
+            <div class="section-head">
+                <h2>Browse</h2>
+                <span class="section-description">All games</span>
+            </div>
+            <p style="color: var(--muted); margin-top: 20px;">No games available.</p>
+        </div>
 
-    <table width="95%" align="center" border="0" cellpadding="10">
-        <tr>
-            <td colspan="5"><h2>Favorite</h2></td>
-        </tr>
-        <tr align="center">
-            <td><img src="game/Spiderman.jpg" width="130" height="180" alt="Spider-Man"><br><small>Spider-Man<br>★★★★★ 5.0</small></td>
-            <td><img src="game/Where Wind meet.jpg" width="130" height="180" alt="Winds Meet"><br><small>Winds Meet<br>★★★★★ 5.0</small></td>
-            <td><img src="game/Apex Legends.jpg" width="130" height="180" alt="Apex"><br><small>Apex Legends<br>★★★★★ 5.0</small></td>
-            <td><img src="game/Naraka.jpg" width="130" height="180" alt="Naraka"><br><small>Naraka<br>★★★★★ 5.0</small></td>
-            <td><img src="game/Dota.jpg" width="130" height="180" alt="Dota 2"><br><small>Dota 2<br>★★★★★ 5.0</small></td>
-        </tr>
-        <tr align="center">
-            <td><img src="game/One Piece.jpg" width="130" height="180" alt="One Piece"><br><small>One Piece<br>★★★★★ 5.0</small></td>
-            <td><img src="game/Doom.webp" width="130" height="180" alt="Doom"><br><small>Doom Eternal<br>★★★★★ 5.0</small></td>
-            <td><img src="game/Fallout76.jpg" width="130" height="180" alt="Fallout 76"><br><small>Fallout 76<br>★★★★★ 5.0</small></td>
-            <td><img src="game/Fallout 4.jpg" width="130" height="180" alt="Fallout 4"><br><small>Fallout 4<br>★★★★★ 5.0</small></td>
-            <td><img src="game/Repo.jpg" width="130" height="180" alt="R.E.P.O"><br><small>R.E.P.O<br>★★★★★ 5.0</small></td>
-        </tr>
-    </table>
+        <!-- FAVORITE SECTION: Saved games + Your rated games -->
+        <div id="favorite-section">
+            <!-- Favorite Games grid -->
+            <section class="section-block">
+                <div class="section-head">
+                    <h2>Favorite</h2>
+                    <span class="section-description" id="count-favorite">10 items</span>
+                </div>
+                <div class="content-area" id="favorite-games"></div>
+            </section>
 
-    <hr width="90%" color="#444">
+            <!-- Your Rated Games grid -->
+            <section class="section-block">
+                <div class="section-head">
+                    <h2>Your rate</h2>
+                    <span class="section-description" id="count-rated">7 items</span>
+                </div>
+                <div class="content-area" id="rated-games"></div>
+            </section>
+        </div>
 
-    <table width="95%" align="center" border="0" cellpadding="10">
-        <tr>
-            <td colspan="5"><h2>Your rate</h2></td>
-        </tr>
-        <tr align="center">
-            <td><img src="game/Tomb Raider.jpg" width="130" height="180" alt="Tomb Raider"><br><small>Tomb Raider<br>★★★★★ 5.0</small></td>
-            <td><img src="game/ARK.jpg" width="130" height="180" alt="ARK"><br><small>ARK<br>★★★★★ 5.0</small></td>
-            <td><img src="game/Assasasin.jpg" width="130" height="180" alt="Assassin's Creed"><br><small>Assassin's Creed IV<br>★★★★★ 5.0</small></td>
-            <td><img src="game/Red dead2.jpg" width="130" height="180" alt="RDR1"><br><small>Red Dead Redemption<br>★★★★★ 5.0</small></td>
-            <td><img src="game/Red Dead2.jpg" width="130" height="180" alt="RDR2"><br><small>Red Dead Redemption 2<br>★★★★★ 5.0</small></td>
-        </tr>
-        <tr align="center">
-            <td><img src="game/Resident Evil.jpg" width="130" height="180" alt="Resident Evil"><br><small>Resident Evil<br>★★★★★ 5.0</small></td>
-            <td><img src="game/Battlefield.webp" width="130" height="180" alt="Battlefield 6"><br><small>Battlefield 6<br>★★★★★ 5.0</small>
+        <!-- PROFILE SECTION: hidden until Profile tab clicked -->
+        <main id="profile-section" class="hidden">
+            <div class="section-head">
+                <h2>Profile</h2>
+                <span class="section-description">Account info</span>
+            </div>
+            <p style="color: var(--muted); margin-top: 20px;">Profile information here.</p>
+        </main>
+
+    </div>
+
+    <script>
+        const favoriteGames = [
+            { name: 'Spider-Man', image: 'game/Spiderman.jpg', rating: 5.0 },
+            { name: 'Winds Meet', image: 'game/Where Wind meet.jpg', rating: 5.0 },
+            { name: 'Apex Legends', image: 'game/Apex Legends.jpg', rating: 5.0 },
+            { name: 'Naraka', image: 'game/Naraka.jpg', rating: 5.0 },
+            { name: 'Dota 2', image: 'game/Dota.jpg', rating: 5.0 },
+            { name: 'One Piece', image: 'game/One Piece.jpg', rating: 5.0 },
+            { name: 'Doom Eternal', image: 'game/Doom.jpg', rating: 5.0 },
+            { name: 'Fallout 76', image: 'game/Fallout76.jpg', rating: 5.0 },
+            { name: 'Fallout 4', image: 'game/Fallout 4.jpg', rating: 5.0 },
+            { name: 'Batman: Arkham Knight', image: 'game/Batman.jpg', rating: 5.0 }
+        ];
+
+        const ratedGames = [
+            { name: 'Tomb Raider', image: 'game/Tomb Raider.jpg', rating: 5.0 },
+            { name: 'GTA V', image: 'game/GTAV.jpg', rating: 5.0 },
+            { name: 'Assassin\'s Creed IV', image: 'game/Assasasin.jpg', rating: 5.0 },
+            { name: 'Red Dead Redemption', image: 'game/Red dead2.jpg', rating: 5.0 },
+            { name: 'Red Dead Redemption 2', image: 'game/Red Dead 2.jpg', rating: 5.0 },
+            { name: 'Resident Evil', image: 'game/Resident Evil.jpg', rating: 5.0 },
+            { name: 'Battlefield 6', image: 'game/Battlefield.jpg', rating: 5.0 }
+        ];
+
+        function renderGames(games, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = games.map(game => {
+                const cardHTML = `
+                    <article class="card" data-title="${game.name}">
+                        <div class="card-cover">
+                            <img src="${game.image}" alt="${game.name}">
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">${game.name}</h3>
+                            <div class="card-rating">
+                                <span class="stars">★★★★★</span>
+                                <span>${game.rating}</span>
+                            </div>
+                        </div>
+                    </article>
+                `;
+                
+                return `<a href="page-4.html" style="text-decoration: none; color: inherit;">${cardHTML}</a>`;
+            }).join('');
+        }
+
+        // Initialize
+        renderGames(favoriteGames, 'favorite-games');
+        renderGames(ratedGames, 'rated-games');
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                document.getElementById('browse-section').classList.add('hidden');
+                document.getElementById('favorite-section').classList.add('hidden');
+                document.getElementById('profile-section').classList.add('hidden');
+                
+                if (tab.dataset.tab === 'Browse') {
+                    document.getElementById('browse-section').classList.remove('hidden');
+                } else if (tab.dataset.tab === 'Favorite') {
+                    document.getElementById('favorite-section').classList.remove('hidden');
+                } else if (tab.dataset.tab === 'Profile') {
+                    document.getElementById('profile-section').classList.remove('hidden');
+                }
+            });
+        });
+
+        // Search functionality
+        document.getElementById('search').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            document.querySelectorAll('.card').forEach(card => {
+                const title = card.dataset.title.toLowerCase();
+                card.style.display = title.includes(query) ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
