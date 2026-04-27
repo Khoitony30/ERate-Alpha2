@@ -14,7 +14,7 @@ const games = [
     { name: 'Doom Eternal', image: 'game/Doom.jpg', rating: 5.0 },
     { name: 'Fallout 76', image: 'game/Fallout76.jpg', rating: 5.0 },
     { name: 'Fallout 4', image: 'game/Fallout 4.jpg', rating: 5.0 },
-    { name: 'R.E.P.O', image: 'game/Repo.jpg', rating: 5.0 },
+    { name: 'Split Fiction', image: 'game/Split fiction.jpg', rating: 5.0 },
     // Add more as needed
 ];
 
