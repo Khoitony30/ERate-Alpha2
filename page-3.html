@@ -327,12 +327,12 @@
     <script>
         const favoriteGames = [
             { name: 'Spider-Man', image: 'game/Spiderman.jpg', rating: 5.0 },
-            { name: 'Winds Meet', image: 'game/Where Wind meet.jpg', rating: 5.0 },
+            { name: 'Where Winds Meet', image: 'game/Where Wind meet.jpg', rating: 5.0 },
             { name: 'Apex Legends', image: 'game/Apex Legends.jpg', rating: 5.0 },
             { name: 'Naraka', image: 'game/Naraka.jpg', rating: 5.0 },
             { name: 'Dota 2', image: 'game/Dota.jpg', rating: 5.0 },
             { name: 'One Piece', image: 'game/One Piece.jpg', rating: 5.0 },
-            { name: 'Doom Eternal', image: 'game/Doom.jpg', rating: 5.0 },
+            { name: 'Doom', image: 'game/Doom.jpg', rating: 5.0 },
             { name: 'Fallout 76', image: 'game/Fallout76.jpg', rating: 5.0 },
             { name: 'Fallout 4', image: 'game/Fallout 4.jpg', rating: 5.0 },
             { name: 'Batman: Arkham Knight', image: 'game/Batman.jpg', rating: 5.0 }
@@ -366,7 +366,7 @@
                     </article>
                 `;
                 
-                return `<a href="page-4.html" style="text-decoration: none; color: inherit;">${cardHTML}</a>`;
+                return `<a href="page-4.html?id=${encodeURIComponent(game.name)}" style="text-decoration: none; color: inherit;">${cardHTML}</a>`;
             }).join('');
         }
 
@@ -385,7 +385,8 @@
                 document.getElementById('profile-section').classList.add('hidden');
                 
                 if (tab.dataset.tab === 'Browse') {
-                    document.getElementById('browse-section').classList.remove('hidden');
+                    window.location.href = 'page-2.html';
+                    return;
                 } else if (tab.dataset.tab === 'Favorite') {
                     document.getElementById('favorite-section').classList.remove('hidden');
                 } else if (tab.dataset.tab === 'Profile') {
