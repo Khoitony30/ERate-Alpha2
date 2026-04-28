@@ -336,7 +336,7 @@
     <script>
         const freeGames = [
             { name: 'Spider-Man', image: 'game/Spiderman.jpg', rating: 5.0 },
-            { name: 'Winds Meet', image: 'game/Where Wind meet.jpg', rating: 5.0 },
+            { name: 'Where Winds Meet', image: 'game/Where Wind meet.jpg', rating: 5.0 },
             { name: 'Apex Legends', image: 'game/Apex Legends.jpg', rating: 5.0 },
             { name: 'Naraka', image: 'game/Naraka.jpg', rating: 5.0 },
             { name: 'Dota 2', image: 'game/Dota.jpg', rating: 5.0 },
@@ -386,7 +386,7 @@
                     </article>
                 `;
                 
-                return `<a href="page-4.html" style="text-decoration: none; color: inherit;">${cardHTML}</a>`;
+                return `<a href="page-4.html?id=${encodeURIComponent(game.name)}" style="text-decoration: none; color: inherit;">${cardHTML}</a>`;
             }).join('');
         }
 
