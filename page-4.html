@@ -37,14 +37,14 @@
         </tr>
     </table>
 
-    <h2 style="font-size: 40px; margin-bottom: 10px;">Marvel's Spider-Man Remastered</h2>
+    <h2 style="font-size: 40px; margin-bottom: 10px;" id="game-title">Game Title</h2>
 
     <table width="100%" border="0" cellspacing="20" cellpadding="0">
         <tr valign="top">
             <td width="40%">
-                <img src="Spider-Header.jpg" alt="Spider-Man Remastered" width="100%" style="border: 1px solid #374151;">
+                <img id="game-image" src="" alt="Game Image" width="100%" style="border: 1px solid #374151;">
                 
-                <p style="color: #fbbf24; font-size: 20px;">★★★★★★★★★★ <span style="color: white; font-size: 16px;">10/10</span></p>
+                <p id="game-rating-display" style="color: #fbbf24; font-size: 20px;">★★★★★★★★★★ <span style="color: white; font-size: 16px;">10/10</span></p>
                 
                 <small>Reviews:</small><br>
                 <small>Sort: 
@@ -90,23 +90,19 @@
                                 <summary style="cursor: pointer; text-decoration: underline;">
                                     read more
                                 </summary>
-                                <p style="margin-top: 10px;">
-                                    In Marvel’s Spider-Man Remastered, the worlds of Peter Parker and Spider-Man collide in an original action-packed story. Play as an experienced Peter Parker, fighting big crime and iconic villains in Marvel’s New York. Web-swing through vibrant neighborhoods and defeat villains with epic takedowns.
+                                <p id="game-description" style="margin-top: 10px;">
+                                    Game description here.
                                 </p>
                             </details>
                         </dd>
                         <dt>Publisher:</dt>
-                        <dd>PlayStation Publishing LLC</dd>
+                        <dd id="game-publisher">Publisher</dd>
                         <dt>Date:</dt>
-                        <dd>September 7, 2018</dd>
+                        <dd id="game-release-date">Release Date</dd>
                         <dt>Latest Ver.:</dt>
                         <dd>14752622</dd>
-                        <dt>Steam:</dt>
-                        <dd><a href="https://store.steampowered.com/app/1817070/Marvels_SpiderMan_Remastered/" target="_blank">$59.99</a></dd>
-                        <dt>Epic Games:</dt>
-                        <dd><a href="https://store.epicgames.com/en-US/p/marvels-spider-man-remastered" target="_blank">$59.99</a></dd>
-                        <dt>Playstation:</dt>
-                        <dd><a href="https://store.playstation.com/en-us/product/UP9000-PPSA01467_00-MARVELSSPIDERMAN" target="_blank">$49.99</a></dd>
+                        <dt>Purchase:</dt>
+                        <dd><a id="purchase-link" href="" target="_blank">Buy Now</a></dd>
                         <dt>Platform:</dt>
                         <dd>Playstation, Windows</dd>
                     </dl>
@@ -117,10 +113,10 @@
 
     <h1>System requirement:</h1>
 
-    <div style="background-color: #1f2937; padding: 15px; border-radius: 20px; max-width: 800px; font-size: 22px;">
+    <div style="background-color: #1f2937; padding: 15px; border-radius: 20px; max-width: 800px; font-size: 22px;" id="sys-req-container">
 
     <h3>Minimum</h3>
-    <ul>
+    <ul id="min-sys-req">
         <li><b>OS:</b> Windows 10 64-bit</li>
         <li><b>Processor:</b> Intel Core i3-4160 / AMD equivalent</li>
         <li><b>Memory:</b> 8 GB RAM</li>
@@ -129,7 +125,7 @@
     </ul>
 
     <h3>Recommended</h3>
-    <ul>
+    <ul id="rec-sys-req">
         <li><b>OS:</b> Windows 10 64-bit</li>
         <li><b>Processor:</b> Intel Core i5-4670 / AMD Ryzen 5 1600</li>
         <li><b>Memory:</b> 16 GB RAM</li>
@@ -141,6 +137,50 @@
 
 </body>
 
+<script src="games.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const gameId = params.get("id");
+
+const game = games[gameId];
+
+if (game) {
+    document.getElementById("game-title").textContent = game.title;
+    document.getElementById("game-image").src = game.image;
+    document.getElementById("game-description").textContent = game.description;
+    document.getElementById("game-rating-display").innerHTML = '★★★★★★★★★★ <span style="color: white; font-size: 16px;">' + game.rating + '</span>';
+    document.getElementById("game-publisher").textContent = game.publisher;
+    document.getElementById("game-release-date").textContent = game.releaseDate;
+    // Purchase link
+    document.getElementById("purchase-link").href = game.purchaseLink;
+    if (typeof game.price === "number") {
+        document.getElementById("purchase-link").textContent = "$" + game.price;
+    } else {
+        document.getElementById("purchase-link").textContent = game.price;
+    }
+
+    // System requirements
+    const minReq = game.sysReqMin;
+    const recReq = game.sysReqRec;
+    document.getElementById("min-sys-req").innerHTML = `
+        <li><b>OS:</b> ${minReq.os}</li>
+        <li><b>Processor:</b> ${minReq.processor}</li>
+        <li><b>Memory:</b> ${minReq.memory}</li>
+        <li><b>Graphics:</b> ${minReq.graphics}</li>
+        <li><b>Storage:</b> ${minReq.storage}</li>
+    `;
+    document.getElementById("rec-sys-req").innerHTML = `
+        <li><b>OS:</b> ${recReq.os}</li>
+        <li><b>Processor:</b> ${recReq.processor}</li>
+        <li><b>Memory:</b> ${recReq.memory}</li>
+        <li><b>Graphics:</b> ${recReq.graphics}</li>
+        <li><b>Storage:</b> ${recReq.storage}</li>
+    `;
+} else {
+    document.getElementById("game-title").textContent = "Game not found";
+}
+</script>
+
 <script>
 function addReview() {
     const name = document.getElementById("username").value || "Anonymous";
@@ -151,10 +191,11 @@ function addReview() {
 
     const review = { name, rating, text };
 
-    let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+    const reviewKey = "reviews_" + gameId;
+    let reviews = JSON.parse(localStorage.getItem(reviewKey)) || [];
     reviews.push(review);
 
-    localStorage.setItem("reviews", JSON.stringify(reviews));
+    localStorage.setItem(reviewKey, JSON.stringify(reviews));
 
     displayReviews();
 
@@ -163,7 +204,8 @@ function addReview() {
 
 function displayReviews() {
     const container = document.getElementById("review-list");
-    const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+    const reviewKey = "reviews_" + gameId;
+    const reviews = JSON.parse(localStorage.getItem(reviewKey)) || [];
 
     container.innerHTML = "";
 
@@ -176,4 +218,3 @@ function displayReviews() {
 
 displayReviews();
 </script>
-    <h1>System requirement:</h1>
